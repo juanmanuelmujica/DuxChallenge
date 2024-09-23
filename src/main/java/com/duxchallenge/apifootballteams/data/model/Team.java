@@ -1,6 +1,8 @@
 package com.duxchallenge.apifootballteams.data.model;
 
 import jakarta.persistence.*;
+
+
 @Entity
 @Table(name = "TEAMS")
 public class Team {

@@ -1,6 +1,7 @@
 package com.duxchallenge.apifootballteams.service.iservice;
 
 import com.duxchallenge.apifootballteams.data.dto.TeamDto;
+import com.duxchallenge.apifootballteams.exception.TeamNotFoundException;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ public interface ITeamService {
 
     TeamDto updateTeam(int id, TeamDto team);
 
-    void deleteTeam(int id);
+    void deleteTeam(int id) throws TeamNotFoundException;
 }

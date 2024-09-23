@@ -1,9 +1,14 @@
 package com.duxchallenge.apifootballteams.data.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class TeamDto {
     private int id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String league;
+    @NotBlank
     private String country;
 
     public int getId() {

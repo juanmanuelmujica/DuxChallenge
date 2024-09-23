@@ -2,6 +2,7 @@ package com.duxchallenge.apifootballteams.controller;
 
 import com.duxchallenge.apifootballteams.data.dto.TeamDto;
 import com.duxchallenge.apifootballteams.service.TeamService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class TeamController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveTeam(@RequestBody TeamDto teamDto) {
+    public ResponseEntity<?> saveTeam(@Valid @RequestBody TeamDto teamDto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .build();

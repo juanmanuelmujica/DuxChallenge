@@ -3,13 +3,13 @@ package com.duxchallenge.apifootballteams.service;
 import com.duxchallenge.apifootballteams.data.dto.TeamDto;
 import com.duxchallenge.apifootballteams.data.mapper.TeamMapper;
 import com.duxchallenge.apifootballteams.data.model.Team;
+import com.duxchallenge.apifootballteams.exception.TeamNotFoundException;
 import com.duxchallenge.apifootballteams.repository.ITeamRepository;
 import com.duxchallenge.apifootballteams.service.iservice.ITeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,15 +29,15 @@ public class TeamService implements ITeamService {
     }
 
     @Override
-    public TeamDto getTeamById(int id) throws NoSuchElementException {
+    public TeamDto getTeamById(int id) throws TeamNotFoundException {
         return mapper.toDto(findTeamById(id));
     }
 
     @Override
-    public TeamDto getTeamByName(String name) throws NoSuchElementException {
+    public TeamDto getTeamByName(String name) throws TeamNotFoundException {
         return mapper.toDto(repository
                 .findTeamByName(name)
-                .orElseThrow());
+                .orElseThrow(TeamNotFoundException::new));
     }
 
     @Override
@@ -54,7 +54,11 @@ public class TeamService implements ITeamService {
 
     @Override
     public void deleteTeam(int id) {
-        repository.deleteById(id);
+        if(repository.existsById(id)){
+            repository.deleteById(id);
+        } else {
+            throw new TeamNotFoundException();
+        }
     }
 
     private void setNewValuesToTeam(Team team, TeamDto teamDto) {
@@ -63,9 +67,7 @@ public class TeamService implements ITeamService {
         team.setCountry(teamDto.getCountry());
     }
 
-    private Team findTeamById(int id) throws NoSuchElementException{
-        return repository.findById(id).orElseThrow();
+    private Team findTeamById(int id) throws TeamNotFoundException{
+        return repository.findById(id).orElseThrow(TeamNotFoundException::new);
     }
-
-
 }
