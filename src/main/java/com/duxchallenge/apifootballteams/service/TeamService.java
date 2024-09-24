@@ -3,13 +3,18 @@ package com.duxchallenge.apifootballteams.service;
 import com.duxchallenge.apifootballteams.data.dto.TeamDto;
 import com.duxchallenge.apifootballteams.data.mapper.TeamMapper;
 import com.duxchallenge.apifootballteams.data.model.Team;
+import com.duxchallenge.apifootballteams.exception.InvalidTeamDtoException;
 import com.duxchallenge.apifootballteams.exception.TeamNotFoundException;
 import com.duxchallenge.apifootballteams.repository.ITeamRepository;
 import com.duxchallenge.apifootballteams.service.iservice.ITeamService;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,8 +46,12 @@ public class TeamService implements ITeamService {
     }
 
     @Override
-    public TeamDto saveTeam(TeamDto teamDto) {
-        return mapper.toDto(repository.save(mapper.fromDto(teamDto)));
+    public TeamDto saveTeam(TeamDto teamDto){
+        if(isValidTeamDto(teamDto)){
+            return mapper.toDto(repository.save(mapper.fromDto(teamDto)));
+        } else {
+            throw new InvalidTeamDtoException();
+        }
     }
 
     @Override
@@ -69,5 +78,12 @@ public class TeamService implements ITeamService {
 
     private Team findTeamById(int id) throws TeamNotFoundException{
         return repository.findById(id).orElseThrow(TeamNotFoundException::new);
+    }
+
+    private boolean isValidTeamDto(TeamDto teamDto) {
+        Validator validator = Validation.buildDefaultValidatorFactory()
+                                        .getValidator();
+        Set<ConstraintViolation<TeamDto>> violations = validator.validate(teamDto);
+        return violations.isEmpty();
     }
 }

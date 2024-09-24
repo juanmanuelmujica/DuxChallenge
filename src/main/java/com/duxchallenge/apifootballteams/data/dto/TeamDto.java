@@ -1,5 +1,6 @@
 package com.duxchallenge.apifootballteams.data.dto;
 
+
 import jakarta.validation.constraints.NotBlank;
 
 public class TeamDto {

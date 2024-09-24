@@ -2,7 +2,7 @@ package com.duxchallenge.apifootballteams.controller;
 
 import com.duxchallenge.apifootballteams.data.dto.TeamDto;
 import com.duxchallenge.apifootballteams.service.TeamService;
-import jakarta.validation.Valid;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +31,10 @@ public class TeamController {
     }
 
     @PostMapping
-    public ResponseEntity<?> saveTeam(@Valid @RequestBody TeamDto teamDto) {
+    public ResponseEntity<?> saveTeam(@RequestBody TeamDto teamDto) throws BadRequestException {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .build();
+                .body(service.saveTeam(teamDto));
     }
 
     @PutMapping("{id}")
