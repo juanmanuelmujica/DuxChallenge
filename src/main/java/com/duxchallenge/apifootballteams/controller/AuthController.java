@@ -4,7 +4,6 @@ import com.duxchallenge.apifootballteams.data.dto.AuthResponseDto;
 import com.duxchallenge.apifootballteams.data.dto.AuthenticationRequestDto;
 import com.duxchallenge.apifootballteams.service.AuthService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
