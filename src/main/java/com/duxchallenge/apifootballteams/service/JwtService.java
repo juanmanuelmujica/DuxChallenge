@@ -16,7 +16,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
     // Se coloca a fines prácticos, no es una buena práctica exponer la secret key en código o en algún archivo público
-    private static final String SECRET_KEY = "DFBD366ABAD9A58AD88B4FCD1A386";
+    private static final String SECRET_KEY = "QgFl4apIcKBIV7BEYKNUlNUV3JOZS9W0IEJDFI9JYw3";
 
     public String extractUsername(String jwt) {
         return getClaim(jwt, Claims::getSubject);
@@ -54,6 +54,6 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder().claims(extraClaims).subject(userDetails.getUsername()).issuedAt(new Date(System.currentTimeMillis() + 1000 * 60 * 24)).signWith(getSingIngKey(), Jwts.SIG.HS256).compact();
+        return Jwts.builder().claims(extraClaims).subject(userDetails.getUsername()).expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)).signWith(getSingIngKey(), Jwts.SIG.HS256).compact();
     }
 }

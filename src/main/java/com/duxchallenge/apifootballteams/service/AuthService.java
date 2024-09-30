@@ -22,11 +22,6 @@ public class AuthService implements IAuthService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthResponseDto register(AuthenticationRequestDto request) {
-        var user = service.register(request);
-        return setAuthResponseDto(user);
-    }
-
     public AuthResponseDto login(AuthenticationRequestDto request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

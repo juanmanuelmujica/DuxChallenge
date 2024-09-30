@@ -21,7 +21,8 @@ public class SecurityConfig {
             "/swagger-resources/**",
             "/h2/**",
             "/console/**",
-            "/account/**"
+            "/account/**",
+            "/auth/**"
     };
 
     private final JwtFilter jwtFilter;
@@ -40,7 +41,8 @@ public class SecurityConfig {
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin   ))
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

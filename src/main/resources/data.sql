@@ -24,5 +24,5 @@ INSERT INTO Teams (name,league,country) VALUES
     ,   ('SSC Napoli', 'Serie A', 'Italia')
     ,   ('Atlético Madrid', 'La Liga', 'España');
 
-INSERT INTO Users (username,password) VALUES
-        ('test','12345');
+INSERT INTO Users (username,password,role) VALUES
+        ('test','12345','USER');
