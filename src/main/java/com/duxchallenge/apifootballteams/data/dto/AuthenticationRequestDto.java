@@ -1,9 +1,6 @@
-package com.duxchallenge.apifootballteams.data.model;
+package com.duxchallenge.apifootballteams.data.dto;
 
-import jakarta.persistence.Embeddable;
-
-@Embeddable
-public class UserId {
+public class AuthenticationRequestDto {
     private String username;
     private String password;
 

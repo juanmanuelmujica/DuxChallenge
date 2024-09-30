@@ -9,8 +9,9 @@ CREATE TABLE IF NOT EXISTS Teams (
 
 -- Create users table
 CREATE TABLE IF NOT EXISTS Users (
-        username VARCHAR(255) NOT NULL
+        id UUID default random_uuid()
+    ,   username VARCHAR(255) NOT NULL
     ,   password VARCHAR(255) NOT NULL
-    ,   CONSTRAINT pk_user_id PRIMARY KEY (username,password)
+    ,   CONSTRAINT pk_user_id PRIMARY KEY (id)
 );
 

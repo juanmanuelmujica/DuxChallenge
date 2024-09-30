@@ -1,10 +1,14 @@
 package com.duxchallenge.apifootballteams.repository;
 
 import com.duxchallenge.apifootballteams.data.model.User;
-import com.duxchallenge.apifootballteams.data.model.UserId;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Repository
-public interface IUserRepository extends JpaRepository<User, UserId> {
+public interface IUserRepository extends JpaRepository<User, UUID> {
+    Optional<User> findByUsername(String username);
 }
