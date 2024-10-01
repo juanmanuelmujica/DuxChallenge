@@ -7,7 +7,6 @@ import com.duxchallenge.apifootballteams.data.model.Team;
 import com.duxchallenge.apifootballteams.exception.InvalidTeamDtoException;
 import com.duxchallenge.apifootballteams.exception.TeamNotFoundException;
 import com.duxchallenge.apifootballteams.repository.ITeamRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
