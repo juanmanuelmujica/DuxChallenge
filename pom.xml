@@ -10,8 +10,8 @@
 	</parent>
 	<groupId>com.duxchallenge</groupId>
 	<artifactId>apiequipos</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>Api Equipos</name>
+	<version>0.0.1</version>
+	<name>api_equipos</name>
 	<description>Api for DUX Challenge</description>
 	<url/>
 	<licenses>

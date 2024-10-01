@@ -152,9 +152,9 @@ class TeamServiceTest {
     @Test
     @DisplayName("Given a team that is wrong then throw invalid team dto exception")
     void givenATeamThatIsWrongWhenSaveTeamThenThrowInvalidTeamDtoException() {
-        teamDto1.setLeague("");
+        TeamDto teamMock = new TeamDto();
 
-        assertThrows(InvalidTeamDtoException.class, () -> teamService.saveTeam(teamDto1));
+        assertThrows(InvalidTeamDtoException.class, () -> teamService.saveTeam(teamMock));
     }
 
 
