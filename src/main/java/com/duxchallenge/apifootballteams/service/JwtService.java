@@ -22,13 +22,18 @@ public class JwtService {
         return getClaim(jwt, Claims::getSubject);
     }
 
-    private <T> T getClaim(String token, Function<Claims, T > claimsResolver) {
+    private <T> T getClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().verifyWith(getSingIngKey()).build().parseSignedClaims(token).getPayload();
+        return Jwts
+                .parser()
+                .verifyWith(getSingIngKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     private SecretKey getSingIngKey() {
@@ -54,6 +59,11 @@ public class JwtService {
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder().claims(extraClaims).subject(userDetails.getUsername()).expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24)).signWith(getSingIngKey(), Jwts.SIG.HS256).compact();
+        return Jwts.builder()
+                .claims(extraClaims)
+                .subject(userDetails.getUsername())
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
+                .signWith(getSingIngKey(), Jwts.SIG.HS256)
+                .compact();
     }
 }
