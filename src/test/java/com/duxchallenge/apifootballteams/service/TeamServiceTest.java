@@ -21,6 +21,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = ApiequiposApplicationTests.class)
@@ -157,10 +160,40 @@ class TeamServiceTest {
 
 
     @Test
-    void updateTeam() {
+    @DisplayName("Given a team then update it")
+    void givenATeamWhenUpdateThenUpdateIt() {
+        when(repository.findById(anyInt())).thenReturn(Optional.of(team1));
+        when(mapper.toDto(any())).thenReturn(teamDto1);
+
+        TeamDto result = teamService.updateTeam(1, teamDto1);
+
+        assertAll(
+                () -> assertEquals(result.getId(),team1.getId()),
+                () -> assertEquals(result.getName(),team1.getName()),
+                () -> assertEquals(result.getLeague(),team1.getLeague()),
+                () -> assertEquals(result.getCountry(),team1.getCountry())
+        );
     }
 
     @Test
-    void deleteTeam() {
+    @DisplayName("Given an id of an existent team then throw team not found exception")
+    void givenAnIdWhenUpdateTeamThenThrowTeamNotFoundException() {
+        when(repository.findById(anyInt())).thenReturn(Optional.empty());
+        assertThrows(TeamNotFoundException.class, () -> teamService.updateTeam(1, teamDto1));
+    }
+
+    @Test
+    @DisplayName("Given an id of an existent team then delete it")
+    void givenAnIdWhenDeleteTeamThenDeleteIt() {
+        when(repository.existsById(1)).thenReturn(true);
+        teamService.deleteTeam(1);
+        verify(repository).deleteById(any());
+    }
+
+    @Test
+    @DisplayName("Given an id of an unexistent team then throw team not found exception")
+    void givenAnIdWhenDeleteTeamThenThrowTeamNotFoundException() {
+        when(repository.existsById(1)).thenReturn(false);
+        assertThrows(TeamNotFoundException.class, () -> teamService.deleteTeam(1));
     }
 }
